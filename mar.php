@@ -47,6 +47,13 @@ class main {
 	private $scanner = null;
 
 	/**
+	 * Ignore class
+	 *
+	 * @var		object
+	 */
+	private $ignore = null;
+
+	/**
 	 * Main Constructor
 	 *
 	 * @access	public
@@ -126,10 +133,12 @@ class main {
 					$grabLineNumber = $syntax['line'];
 				}
 			}
-
+            $this->ignore = new ignore();
 			foreach ($lines as $index => $line) {
-				$lineNumber = $index + 1;
+                $lineNumber = $index + 1;
+
 				$line = trim($line, "\r\n");
+                $line = $this->ignore->test($line);
 
 				if ($lineNumber == $grabLineNumber) {
 					$grabLine = $line;
